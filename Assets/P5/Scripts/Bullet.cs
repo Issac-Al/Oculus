@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Bullet : MonoBehaviour
 {
     private void OnCollisionEnter(Collision other)
@@ -10,6 +11,7 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             GameObject.FindGameObjectWithTag("Spawn").GetComponent<EnemySpawner>().EnemiesRemove(other.gameObject);
+            GameObject.FindGameObjectWithTag("GUI").GetComponent<GUI>().NewKill();
             Destroy(gameObject);
         }
         else
@@ -17,4 +19,5 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 }

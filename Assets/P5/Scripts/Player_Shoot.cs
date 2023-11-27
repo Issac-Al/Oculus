@@ -14,7 +14,9 @@ public class Player_Shoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        float triggerOculusValue = OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger);
+
+        if (triggerOculusValue >= 0.5f || Input.GetKeyDown(KeyCode.X))
         {
             playerAnim.SetTrigger("shoot");
             actualBullet = Instantiate(bullet, spawnPos.position, Quaternion.identity);

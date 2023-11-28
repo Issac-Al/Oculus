@@ -8,7 +8,7 @@ public class EnemyWeapon : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("PlayerHit");
+            other.gameObject.GetComponent<Player_Movement>().GetHurt();
         }
     }
 }

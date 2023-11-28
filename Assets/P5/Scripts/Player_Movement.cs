@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Player_Movement : MonoBehaviour
 {
@@ -11,9 +12,14 @@ public class Player_Movement : MonoBehaviour
     public Vector3 userDirection;
     public float userSpeed;
     public Transform cameraTranform;
+    public int HP;
+    private int currentHP;
+    public float DmgTimer;
+    private float DmgCD = 0;
     // Start is called before the first frame update
     private void Start()
     {
+        currentHP = HP;
         playerAnim = GetComponent<Animator>();
         userCharacter = GetComponent<CharacterController>();
     }
@@ -27,6 +33,25 @@ public class Player_Movement : MonoBehaviour
         //userDirection.y = 0f;
         userCharacter.Move(userDirection * Time.deltaTime * userSpeed);
         Debug.Log(Input.GetAxis("Horizontal"));
+        if(currentHP <= 0)
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
+    }
+
+    public void GetHurt()
+    {
+        if (DmgCD < Time.time)
+        {
+            DmgCD = Time.time + DmgTimer;
+            currentHP--;
+        }
+    }    
+
+    public int ReturnHP()
+    {
+        return currentHP;
     }
 
 }
